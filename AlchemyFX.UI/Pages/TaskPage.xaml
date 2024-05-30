@@ -1,0 +1,144 @@
+﻿<Page x:Class="AlchemyFX.UI.Pages.TaskPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:main="clr-namespace:AlchemyFX.UI"
+      xmlns:local="clr-namespace:AlchemyFX.UI.Pages"
+      xmlns:controls="clr-namespace:AlchemyFX.UI.Controls"
+      xmlns:xaml="clr-namespace:AlchemyFX.UI.Xaml"
+      xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+      xmlns:editors="clr-namespace:AlchemyFX.UI.Editors;assembly=AlchemyFX.Core"
+      xmlns:mdxaml="clr-namespace:MdXaml;assembly=MdXaml"
+      xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TaskPage"
+      Loaded="Page_Loaded"
+      KeyDown="Page_KeyDown"
+>
+    <Grid Margin="0,10,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="46"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="13"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="27"/>
+        </Grid.RowDefinitions>
+        
+        <Label Content="Redmine Task" Grid.Row="0" />
+        <Grid
+            Grid.Column="1"
+            Grid.Row="0"
+        >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="37" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                x:Name="RedmineTaskUrlTextBox"
+                Background="LightYellow"
+                Grid.Column="0"
+                Text="{Binding Path=Task.TaskUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                KeyUp="RedmineTaskUrlTextBox_KeyUp"
+            />
+            <ToggleButton
+                DataContext="{Binding Task}"
+                x:Name="SaveChangesButton"
+                Click="SaveChangesButton_Click"
+                ToolTip="Save"
+                Grid.Column="1"
+                IsEnabled="{Binding IsModified}"
+                HorizontalAlignment="Right"
+            >
+                <Image Source="{StaticResource OkIcon}" Width="16" Height="16" />
+            </ToggleButton>
+        </Grid>
+
+        <ToggleButton x:Name="TaskOpenButton" Click="TaskOpenButton_Click" Grid.Column="2" Grid.Row="0" ToolTip="Browse">
+            <Image x:Name="UrlOpenIcon" Source="{StaticResource StartIcon}" Width="16" Height="16" />
+        </ToggleButton>
+
+        <Label Content="Notes" Grid.Row="1" />
+        <TabControl
+            Grid.Column="1"
+            Grid.Row="1"
+            Grid.RowSpan="7"
+            TabStripPlacement="Bottom"
+            x:Name="TaskTabs"
+            SelectionChanged="TaskTabs_SelectionChanged"
+        >
+            <TabItem x:Name="TaskBodyTab" Header="Edit">
+                <TabControl x:Name="TaskBodyTabs" Style="{StaticResource HiddenTabs}" TabStripPlacement="Bottom" SelectionChanged="TaskBodyTabs_SelectionChanged">
+                    <TabItem x:Name="BodyViewerSection" Visibility="Hidden">
+                        <FlowDocumentScrollViewer
+                            DataContext="{Binding TaskMarkdownEditor}"
+                            Document="{Binding MarkdownOutputDocument, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{Binding TextAreaDarkViewer}"
+                            MouseDoubleClick="FlowDocumentScrollViewer_MouseDoubleClick"
+                        >
+                            <FlowDocumentScrollViewer.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem x:Name="EditMenuItem" Header="Edit" Click="EditMenuItem_Click" />
+                                </ContextMenu>
+                            </FlowDocumentScrollViewer.ContextMenu>
+                        </FlowDocumentScrollViewer>
+                    </TabItem>
+                    <TabItem x:Name="BodyEditorSection" Visibility="Hidden">
+                        <editors:TextEditor
+                            Name="TaskBodyMarkdownEditor"
+                            DataContext="{Binding TaskMarkdownEditor}"
+                            TextSource="{Binding PlainTextSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource RichTextDark}"
+                            IsModified="{Binding IsModified, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        >
+                            <editors:TextEditor.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem x:Name="ViewMenuItem" Header="Close Editor / View Markdown (readonly)" Click="ViewMenuItem_Click" />
+                                    <Separator />
+                                    <MenuItem Header="Document">
+                                        <MenuItem x:Name="ViewSourceMenuItem" Header="View Xaml Source" Click="ViewXamlSourceMenuItem_Click" />
+                                    </MenuItem>
+                                </ContextMenu>
+                            </editors:TextEditor.ContextMenu>
+                        </editors:TextEditor>
+                    </TabItem>
+                    <TabItem x:Name="TaskBodyXamlEditorSection" Visibility="Hidden">
+                        <editors:TextEditor
+                            Name="TaskBodyXamlEditor"
+                            Style="{StaticResource RichTextDark}"
+                            IsReadOnly="True"
+                        >
+                            <editors:TextEditor.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Close Xaml Source" Click="EditMenuItem_Click" />
+                                    <Separator />
+                                    <MenuItem Header="Edit" Click="EditMenuItem_Click" />
+                                    <MenuItem Header="View Markdown (readonly)" Click="ViewMenuItem_Click" />
+                                </ContextMenu>
+                            </editors:TextEditor.ContextMenu>
+                        </editors:TextEditor>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem x:Name="RedmineTaskTab" Header="Redmine">
+                <wv2:WebView2 x:Name="RedmineTaskView" />
+            </TabItem>
+        </TabControl>
+
+        <Separator Grid.Row="9" Grid.ColumnSpan="3" Height="1" />
+        <StatusBar x:Name="statusBar" Grid.Row="10" Grid.ColumnSpan="3" />
+    </Grid>
+</Page>

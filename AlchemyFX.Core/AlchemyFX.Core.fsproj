@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <UseWPF>true</UseWPF>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="AlchemyFX.fs" />
+    <Compile Include="View.fs" />
+    <Compile Include="View.RelayCommand.fs" />
+    <Compile Include="View.GlobalCommands.fs" />
+    <Compile Include="View.Application.fs" />
+    <Compile Include="String.fs" />
+    <Compile Include="UI.fs" />
+    <Compile Include="UI.Colors.fs" />
+    <Compile Include="Markdown.fs" />
+    <Compile Include="UI.Theme.fs" />
+    <Compile Include="UI.TextRange.fs" />
+    <Compile Include="UI.FlowDocument.fs" />
+    <Compile Include="UI.TextEditor.fs" />
+    <Compile Include="UI.TextEditorProcessor.fs" />
+    <Compile Include="UI.ImageSelector.fs" />
+    <Compile Include="UI.Launch.fs" />
+    <Compile Include="Data.fs" />
+    <Compile Include="Data.Db.fs" />
+    <Compile Include="Data.Repository.fs" />
+    <Compile Include="Data.Model.fs" />
+    <Compile Include="Config.fs" />
+    <Compile Include="View.EditorViewModel.fs" />
+    <Compile Include="View.ProfileViewModel.fs" />
+    <Compile Include="View.TaskViewModel.fs" />
+    <Compile Include="View.ApplicationViewModel.fs" />
+    <Compile Include="StandardOutput.fs" />
+    <Compile Include="WSL.fs" />
+    <Compile Include="LocationBuilder.fs" />
+    <Compile Include="Utils.fs" />
+    <Compile Include="UI.StatusBarBuilder.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.1" />
+    <PackageReference Include="FSharp.Formatting" Version="20.0.0" />
+    <PackageReference Include="LiteDB.FSharp" Version="2.16.0" />
+    <PackageReference Include="MdXaml" Version="1.27.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
+    <PackageReference Include="MoonSharp" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Unity" Version="5.11.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="8.0.100" />
+  </ItemGroup>
+
+  <ItemGroup />
+
+</Project>

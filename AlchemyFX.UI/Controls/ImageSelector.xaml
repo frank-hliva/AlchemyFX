@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="AlchemyFX.UI.Controls.ImageSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AlchemyFX.UI.Controls"
+             xmlns:vectors="https://github.com/dotnetprojects/SVGImage"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Border" x:Key="HoverBorderStyle">
+            <Setter Property="BorderBrush" Value="#aaa" />
+            <Setter Property="Opacity" Value="0.75" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#888" />
+                    <Setter Property="Background" Value="#aaa" />
+                    <Setter Property="Opacity" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="#bbb" BorderThickness="1" Background="#ddd">
+        <ItemsControl
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Center"
+            ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType=local:ImageSelector}}"
+        >
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="FrameworkElement.Margin" Value="3"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        x:Name="ItemBorder"
+                        BorderThickness="4"
+                        Background="Transparent"
+                        MouseLeftButtonUp="SelectItem"
+                        Cursor="Hand"
+                        Style="{StaticResource HoverBorderStyle}"
+                    >
+                        <Grid
+                            Width="250"
+                        >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="27" />
+                            </Grid.RowDefinitions>
+                            <vectors:SVGImage
+                                UriSource="{Binding Data.Image}"
+                                Width="160"
+                                Height="160"
+                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                RenderTransformOrigin="1,1"
+                                SizeType="ViewBoxToSizeNoStretch"
+                            />
+                            <TextBlock
+                                Text="{Binding Data.Name}"
+                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Grid.Row="1"
+                            />
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="Green"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="LightGreen"/>
+                            <Setter TargetName="ItemBorder" Property="Opacity" Value="1"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Border>
+
+</UserControl>

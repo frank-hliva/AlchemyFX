@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>AlchemyFX.ico</ApplicationIcon>
+    <PlatformTarget>x64</PlatformTarget>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="AlchemyFX.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.1" />
+    <PackageReference Include="FSharp.Core" Version="8.0.100" />
+    <PackageReference Include="FSharp.Formatting" Version="20.0.0" />
+    <PackageReference Include="LiteDB.FSharp" Version="2.16.0" />
+    <PackageReference Include="MdXaml" Version="1.27.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
+    <PackageReference Include="MoonSharp" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Unity" Version="5.11.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlchemyFX.Core\AlchemyFX.Core.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\accept.png" />
+    <Resource Include="Images\add.png" />
+
+    <Resource Include="Images\page.png" />
+    <Resource Include="Images\page_add.png" />
+    <Resource Include="Images\page_edit.png" />
+    <Resource Include="Images\page_copy.png" />
+    <Resource Include="Images\page_paste.png" />
+    <Resource Include="Images\page_white.png" />
+    <Resource Include="Images\page_white_edit.png" />
+    <Resource Include="Images\page_white_copy.png" />
+    <Resource Include="Images\page_white_paste.png" />
+    
+    <Resource Include="Images\save.png" />
+    <Resource Include="Images\cross.png" />
+    <Resource Include="Images\control_play_blue.png" />
+    <Resource Include="Images\control_stop_blue.png" />
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\folder.png" />
+    <Resource Include="Images\settings.png" />
+    <Resource Include="Images\tick.png" />
+    <Resource Include="Images\bin.png" />
+    <Resource Include="Images\bin_closed.png" />
+    <Resource Include="Images\cog.png" />
+    <Resource Include="Images\Launch.png" />
+
+    <Resource Include="Images\tool_window.svg" />
+    <Resource Include="Images\resizable_window.svg" />
+    
+    <Resource Include="Images\question.png" />
+  </ItemGroup>
+
+</Project>
