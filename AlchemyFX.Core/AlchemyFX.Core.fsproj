@@ -15,8 +15,8 @@
     <Compile Include="View.Application.fs" />
     <Compile Include="String.fs" />
     <Compile Include="UI.fs" />
+    <Compile Include="UI.Text.fs" />
     <Compile Include="UI.Colors.fs" />
-    <Compile Include="Markdown.fs" />
     <Compile Include="UI.Theme.fs" />
     <Compile Include="UI.TextRange.fs" />
     <Compile Include="UI.FlowDocument.fs" />

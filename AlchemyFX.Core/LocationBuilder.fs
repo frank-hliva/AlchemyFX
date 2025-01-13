@@ -58,7 +58,7 @@ type LocationBuilder(config : AppConfig) =
         $"{localhostRoot}/ims/html2/admin/space.html" |> Uri
 
     let toRunLocalhostCommand (mainUrl : Uri) =
-        $"{config.PackageManager} run dev --customer=all --proxyUrl={mainUrl.Scheme}{Uri.SchemeDelimiter}{mainUrl.Host}:{mainUrl.Port}{mainUrl.LocalPath} --requestCaching=true"
+        $"{config.PackageManager} run dev --customer=all --appName=ims4 --proxyUrl={mainUrl.Scheme}{Uri.SchemeDelimiter}{mainUrl.Host}:{mainUrl.Port}{mainUrl.LocalPath} --requestCaching=true"
 
     let toRunLocalhostLegacyCommand (mainUrl : Uri) = 
         $"{config.PackageManager} run local-dev -- --url {mainUrl.Scheme}{Uri.SchemeDelimiter}{mainUrl.Host}:{mainUrl.Port}{mainUrl.LocalPath} --reload"

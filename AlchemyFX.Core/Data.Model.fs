@@ -20,6 +20,7 @@ type Profile =
         mutable MainUrl : string
         mutable TaskUrl : string
         mutable TaskBody : string
+        mutable TaskBodyMimeType : string
         mutable Created : DateTime
     }
     static member Empty() =
@@ -29,6 +30,7 @@ type Profile =
             MainUrl = ""
             TaskUrl = ""
             TaskBody = ""
+            TaskBodyMimeType = ""
             Created = DateTime.Now
         }
 

@@ -13,6 +13,7 @@ open System.Windows.Input
 open System.Windows.Documents
 open System.Windows.Media
 open System.Windows.Markup
+open System.Windows.Controls
 
 open AlchemyFX
 open AlchemyFX.UI
@@ -27,29 +28,9 @@ type EditorViewModel(
 ) =
     inherit ViewModel(globalCommands)
 
-    let mutable plainTextSource = ""
+    let mutable richTextSource = FlowDocument()
     let mutable isModified = false
-
-    let markdownEngine = Markdown()
-
-    member vm.PlainTextSource
-        with get() = plainTextSource
-        and set value =
-            if plainTextSource <> value then
-                plainTextSource <- value
-                vm.IsModified <- true
-                nameof vm.PlainTextSource |> vm.OnPropertyChanged
-                nameof vm.MarkdownOutputDocument |> vm.OnPropertyChanged
-
-    member vm.MarkdownOutputDocument
-        with get() =
-            if
-                plainTextSource = null ||
-                String.IsNullOrWhiteSpace(plainTextSource)
-            then ""
-            else plainTextSource
-            |> markdownEngine.Transform
-            |> FlowDocument.withTheme theme
+    let mutable textEditor = None
 
     member vm.IsModified
         with get() = isModified
@@ -57,19 +38,30 @@ type EditorViewModel(
             if isModified <> value then
                 isModified <- value
                 nameof vm.IsModified |> vm.OnPropertyChanged
-                nameof vm.MarkdownOutputDocument |> vm.OnPropertyChanged
+
+    member vm.TextEditor
+        with get() = textEditor
+        and set value =
+            if textEditor <> value then
+                textEditor <- value
+                nameof vm.TextEditor |> vm.OnPropertyChanged
 
     abstract member LoadDocumentFromString : string -> bool
-    default vm.LoadDocumentFromString(documentContent : string) =
+    default vm.LoadDocumentFromString (documentContent : string) =
+        vm.IsModified <- false
         try
-            vm.PlainTextSource <- documentContent
-            vm.IsModified <- false
-            true
+            if documentContent |> Text.isXaml then
+                vm.RichTextSource <- FlowDocument.ofXaml documentContent
+                true
+            else
+
+
         with
         | _ ->
-            vm.PlainTextSource <- ""
-            vm.IsModified <- false
+            textEditor.DocumentSession
+            |> FlowDocumentSession.clear
             false
+
 
     abstract member SaveChanges : unit -> string
     default vm.SaveChanges() =

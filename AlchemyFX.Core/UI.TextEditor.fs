@@ -57,6 +57,8 @@ type TextEditor() as editor =
             )
         )
 
+    member editor.DocumentSession with get() = documentSession
+
     member editor.TextProcess = textProcessEvent.Publish
 
     member editor.RegisterTextProcessor (textProcessor : ITextProcessor) =

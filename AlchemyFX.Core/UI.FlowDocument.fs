@@ -42,6 +42,11 @@ module FlowDocument =
         |> XDocument.Parse
         |> _.ToString(SaveOptions.None)
 
+    let ofXaml (xamlText : string) =
+        xamlText
+        |> XamlReader.Parse
+        :?> FlowDocument
+
     let removeStyles (document: FlowDocument) =
         TextRange(document.ContentStart, document.ContentEnd).ClearAllProperties()
         document
